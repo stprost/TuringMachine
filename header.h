@@ -9,10 +9,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include <mem.h>
-#include <rpcndr.h>
 #include <stdbool.h>
 
-#define MIN_COND 2
 #define MIN_LEN_OF_TAPE 10
 
 struct Cond {
@@ -21,5 +19,13 @@ struct Cond {
     char *move;
     int nextCond;
 };
+
+int in(FILE *inputOne, FILE *inputTwo, FILE *output);
+
+void printTapes(char **arrayOfTapes, int numOfTapes, int tapesLen[numOfTapes], int arrayOfPointers[numOfTapes], FILE *output);
+
+void printCommands(struct Cond **q, int maxQ, int *sizeOfColumns, int numOfTapes, FILE *output);
+
+void printCommand(struct Cond **q,int numOfTapes, int row, int col, FILE *output);
 
 #endif //TURINGMACHINE_HEADER_H
