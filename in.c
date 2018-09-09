@@ -66,15 +66,16 @@ int in(FILE *inputOne, FILE *inputTwo, FILE *output) {
             maxQ = nextQ;
             q = (struct Cond **) realloc(q, (maxQ + 1) * sizeof(struct Cond *));
             sizeOfColumns = (int *) realloc(sizeOfColumns, (maxQ + 1) * sizeof(int));
-            for (int i = prevQ + 1; i <= maxQ; i++) sizeOfColumns[i] = 1;
+            for (int i = prevQ + 1; i <= maxQ; i++) {
+                q[i] = (struct Cond *) calloc(1, sizeof(struct Cond));
+                sizeOfColumns[i] = 1;
+            }
         }
 
-        sizeOfColumns[prevQ] += 1;
-        printf("%d\n", sizeOfColumns[prevQ]);
-        q[prevQ] = (struct Cond *) realloc(q[prevQ], (sizeOfColumns[prevQ]) * sizeof(struct Cond));
+        q[prevQ] = (struct Cond *) realloc(q[prevQ], (sizeOfColumns[prevQ] + 1) * sizeof(struct Cond));
 
         int n = prevQ; //строка
-        int m = sizeOfColumns[prevQ] - 2; //столбец
+        int m = sizeOfColumns[prevQ] - 1; //столбец
         q[n][m].nextCond = nextQ;
         q[n][m].prevSymb = (char *) calloc(numOfTapes + 1, sizeof(char));
         q[n][m].nextSymb = (char *) calloc(numOfTapes + 1, sizeof(char));
@@ -121,7 +122,7 @@ int in(FILE *inputOne, FILE *inputTwo, FILE *output) {
     }
     for (int i = 0; i < numOfTapes; i++) {
         fscanf(inputTwo, "%s", tempTape);
-        if (strcmp(tempTape, "empty") == 0) {
+        if (strcmp(tempTape, "empty") == 0 || strcmp(tempTape, "Empty") == 0) {
             arrayOfPointers[i] = 0;
             for (int j = 0; j < MIN_LEN_OF_TAPE; j++) {
                 arrayOfTapes[i][j] = '_';
@@ -154,9 +155,9 @@ int in(FILE *inputOne, FILE *inputTwo, FILE *output) {
         strcpy(arrayOfTapes[i], tempTape);
         free(tempTape);
     }
-    printf("%d %c %d %d", arrayOfPointers[1], arrayOfTapes[1][10], tapesLen[0], tapesLen[1]);
-//    printTapes(arrayOfTapes, numOfTapes, tapesLen, arrayOfPointers, output);
-//    printCommand(q, numOfTapes, 3, 0, output);
-//    printCommands(q, maxQ, sizeOfColumns, numOfTapes, output);
+//    printf("%d %c %d %d", arrayOfPointers[1], arrayOfTapes[1][10], tapesLen[0], tapesLen[1]);
+    printTapes(arrayOfTapes, numOfTapes, tapesLen, arrayOfPointers, output);
+    printCommand(q, numOfTapes, 2, 0, output);
+    printCommands(q, maxQ, sizeOfColumns, numOfTapes, output);
 
 }
