@@ -1,7 +1,7 @@
 #include "header.h"
 
 
-int in(FILE *inputOne, FILE *inputTwo, FILE *output) {
+int in(FILE *inputOne, FILE *inputTwo, FILE *output, int argc, char *argv[]) {
 
     //считывание количества лент и состояний машины
     int prevQ, nextQ, ret, numOfTapes, rowQ;
@@ -9,8 +9,8 @@ int in(FILE *inputOne, FILE *inputTwo, FILE *output) {
 
     fscanf(inputOne, "%d", &numOfTapes);
     if (numOfTapes == 0) {
-        printf("Wrong number of tapes.");
-        exit(1);
+        printf("error 200: Wrong number of tapes.");
+        exit(200);
     }
     int len = numOfTapes * 2;
     struct Cond **q;
@@ -33,33 +33,33 @@ int in(FILE *inputOne, FILE *inputTwo, FILE *output) {
         token = strtok_r(tempLine, " []", &last);
         prevQ = strtol(token, NULL, 0);
         if (prevQ == 0) {
-            printf("Incorrect input conditions data");
-            exit(2);
+            printf("error 201: Incorrect input conditions data");
+            exit(201);
         }
         token = strtok_r(NULL, " []", &last);
         if (strlen(token) != len - 1) {
-            printf("Incorrect input conditions data");
-            exit(2);
+            printf("error 201: Incorrect input conditions data");
+            exit(201);
         }
         strcpy(strPrevSymb, token);
         token = strtok_r(NULL, " []", &last);
         nextQ = strtol(token, NULL, 0);
         token = strtok_r(NULL, " []", &last);
         if (strlen(token) != len - 1) {
-            printf("Incorrect input conditions data");
-            exit(2);
+            printf("error 201: Incorrect input conditions data");
+            exit(201);
         }
         strcpy(strNextSymb, token);
         token = strtok_r(NULL, " []", &last);
         if (strlen(token) != len - 1) {
-            printf("Incorrect input conditions data");
-            exit(2);
+            printf("error 201: Incorrect input conditions data");
+            exit(201);
         }
         strcpy(strMove, token);
         token = strtok_r(NULL, " []\n", &last);
         if (token != NULL) {
-            printf("Incorrect input conditions data");
-            exit(2);
+            printf("error 201: Incorrect input conditions data");
+            exit(201);
         }
 
         if (nextQ > maxQ) {
@@ -108,7 +108,6 @@ int in(FILE *inputOne, FILE *inputTwo, FILE *output) {
         free(strMove);
     }
     fclose(inputOne);
-    //printf("%s %s %s %d \n", q[2][0].prevSymb, q[2][0].nextSymb, q[2][0].move, q[2][0].nextCond);
 
 
     //считывание начального состояния лент
@@ -137,27 +136,34 @@ int in(FILE *inputOne, FILE *inputTwo, FILE *output) {
                 arrayOfPointers[i] = count;
                 break;
             } else if (tempTape[count] != '_') {
-                printf("Incorrect input tapes data");
-                exit(3);
+                printf("error 202: Incorrect input tapes data");
+                exit(202);
             }
             count++;
         }
         if (!flag) {
-            printf("Incorrect input tapes data");
-            exit(3);
+            printf("error 202: Incorrect input tapes data");
+            exit(202);
         }
         fscanf(inputTwo, "\n");
         fscanf(inputTwo, "%s", tempTape);
         while (strlen(tempTape) > tapesLen[i]) {
-            arrayOfTapes[i] = (char *) realloc(arrayOfTapes[i], MIN_LEN_OF_TAPE * sizeof(char));
-            tapesLen[i] += MIN_LEN_OF_TAPE;
+            tapesLen[i]++;
+            arrayOfTapes[i] = (char *) realloc(arrayOfTapes[i], tapesLen[i] * sizeof(char));
         }
         strcpy(arrayOfTapes[i], tempTape);
         free(tempTape);
     }
-//    printf("%d %c %d %d", arrayOfPointers[1], arrayOfTapes[1][10], tapesLen[0], tapesLen[1]);
-    printTapes(arrayOfTapes, numOfTapes, tapesLen, arrayOfPointers, output);
-    printCommand(q, numOfTapes, 2, 0, output);
-    printCommands(q, maxQ, sizeOfColumns, numOfTapes, output);
 
+    if (argc == 6 && (strcmp(argv[5], "-p")) == 0) {
+        printf("Tapes:\n");
+        fprintf(output, "Tapes:\n");
+        printTapes(arrayOfTapes, numOfTapes, tapesLen, arrayOfPointers, output);
+        printCommands(q, maxQ, sizeOfColumns, numOfTapes, output);
+
+    }
+    bool debug = false;
+    if (strcmp(argv[4], "-o") == 0) debug = true;
+    step(arrayOfTapes, numOfTapes, arrayOfPointers, tapesLen, q, debug, sizeOfColumns, output);
+    //printf("%s %s %s %d", q[1][0].prevSymb, q[1][0].nextSymb, q[1][0].move, q[1][0].nextCond);
 }

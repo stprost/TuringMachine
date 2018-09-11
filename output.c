@@ -31,8 +31,8 @@ void printTapes(char **arrayOfTapes, int numOfTapes, int tapesLen[numOfTapes], i
 }
 
 void printCommands(struct Cond **q, int maxQ, int *sizeOfColumns, int numOfTapes, FILE *output) {
-    printf("Commands");
-    fprintf(output, "Commands");
+    printf("Commands:");
+    fprintf(output, "Commands:");
     printf("\n");
     fprintf(output, "\n");
     for (int i = 1; i <= maxQ; i++) {

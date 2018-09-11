@@ -35,8 +35,8 @@ void main(int argc, char *argv[]) {
 
         inputTwo = fopen(argv[2], "rt");
         if (inputTwo == NULL) {
-            printf("error 109: Can not find second input file\n");
-            exit(109);
+            printf("error 101: Can not find second input file\n");
+            exit(101);
         }
 
         output = fopen(argv[3], "wr");
@@ -47,12 +47,12 @@ void main(int argc, char *argv[]) {
 
     if (argc != 5) {
         if (argc != 6 || (argc == 6 && (strcmp(argv[5], "-p") != 0))) {
-            printf("error 101: Wrong number of arguments\n");
-            exit(101);
+            printf("error 102: Wrong number of arguments\n");
+            exit(102);
         }
     }
 
-    in(inputOne, inputTwo, output);
+    in(inputOne, inputTwo, output, argc, argv);
 
     exit(0);
 }
