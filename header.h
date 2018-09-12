@@ -1,6 +1,3 @@
-//
-// Created by pk on 12.06.2018.
-//
 
 #ifndef TURINGMACHINE_HEADER_H
 #define TURINGMACHINE_HEADER_H
@@ -11,7 +8,7 @@
 #include <mem.h>
 #include <stdbool.h>
 
-#define MIN_LEN_OF_TAPE 10
+#define MIN_LEN_OF_TAPE 1
 
 struct Cond {
     char *prevSymb;

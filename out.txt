@@ -1,0 +1,34 @@
+Tapes:
+__v___
+100001
+_v____
+101010
+Running command
+1[0,0] 2[1,1][R,R]
+Tapes:
+___v__
+101001
+__v___
+111010
+Running command
+2[0,1] 2[0,1][L,_]
+Tapes:
+__v___
+101001
+__v___
+111010
+Running command
+2[1,1] 3[_,0][_,R]
+Tapes:
+__v___
+10_001
+___v__
+110010
+Running command
+3[_,0] 2[1,1][R,S]
+Tapes:
+___v__
+101001
+___v__
+110110
+End of program

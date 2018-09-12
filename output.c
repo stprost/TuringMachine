@@ -4,16 +4,18 @@
 void printTapes(char **arrayOfTapes, int numOfTapes, int tapesLen[numOfTapes], int arrayOfPointers[numOfTapes],
                 FILE *output) {
     int count;
+    printf("Tapes:\n");
+    fprintf(output, "Tapes:\n");
     for (int i = 0; i < numOfTapes; i++) {
         count = 0;
-        while (count <= arrayOfPointers[i]) {
+        while (count < tapesLen[i]) {
             if (count == arrayOfPointers[i]) {
                 printf("v");
                 fprintf(output, "v");
             }
             if (count != arrayOfPointers[i]) {
-                printf(" ");
-                fprintf(output, " ");
+                printf("_");
+                fprintf(output, "_");
             }
             count++;
         }

@@ -8,8 +8,8 @@ int in(FILE *inputOne, FILE *inputTwo, FILE *output, int argc, char *argv[]) {
     char *strPrevSymb, *strNextSymb, *strMove, *token, *last;
 
     fscanf(inputOne, "%d", &numOfTapes);
-    if (numOfTapes == 0) {
-        printf("error 200: Wrong number of tapes.");
+    if (numOfTapes <= 0) {
+        printf("error 200: Wrong number of tapes");
         exit(200);
     }
     int len = numOfTapes * 2;
